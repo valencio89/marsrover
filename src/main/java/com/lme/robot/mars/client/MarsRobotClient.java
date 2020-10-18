@@ -2,7 +2,6 @@ package com.lme.robot.mars.client;
 
 import com.lme.robot.mars.MarsGrid;
 import com.lme.robot.mars.MarsRobot;
-import com.lme.robot.mars.client.MarsRobotDriver;
 
 import java.util.LinkedList;
 import java.util.List;
