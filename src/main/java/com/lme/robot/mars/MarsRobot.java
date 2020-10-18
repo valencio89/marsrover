@@ -28,10 +28,42 @@ public class MarsRobot extends Robot {
             throw new IllegalArgumentException();
     }
 
+    @Override
+    public void move(double distance) {
+        if (distance != 1)
+            throw new IllegalArgumentException();
 
+        if (marsGrid.isScented((int) getX(), (int) getY(), getMarsOrientation()))
+            return;
 
-    public boolean isLost() {
-        return this.isLost;
+        if (!isLost) {
+            int previousX = (int) getX();
+            int previousY = (int) getY();
+
+            super.move(distance);
+
+            // if lost
+            if (getX() > marsGrid.getMaxX()) {
+                marsGrid.addScentedGrid(previousX, previousY, MarsOrientation.E);
+                isLost = true;
+            } else if (getX() < 0) {
+                marsGrid.addScentedGrid(previousX, previousY, MarsOrientation.W);
+                isLost = true;
+            } else if (getY() > marsGrid.getMaxY()) {
+                marsGrid.addScentedGrid(previousX, previousY, MarsOrientation.N);
+                isLost = true;
+            } else if (getY() < 0) {
+                marsGrid.addScentedGrid(previousX, previousY, MarsOrientation.S);
+                isLost = true;
+            }
+
+            if (isLost) {
+                // reset coordinate to last seen position, for reporting
+                super.move(-1 * distance);
+            }
+
+        }
+
     }
 
 }
