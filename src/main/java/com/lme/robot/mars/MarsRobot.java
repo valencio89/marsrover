@@ -66,4 +66,41 @@ public class MarsRobot extends Robot {
 
     }
 
+    @Override
+    public String tellCoordinates() {
+        StringBuilder s = new StringBuilder();
+        s.append((int) super.getX());
+        s.append(" ");
+        s.append((int) super.getY());
+        s.append(" ");
+
+        MarsOrientation marsOrientation = getMarsOrientation();
+        if (marsOrientation == null) {
+            s.append("Invalid Orientation");
+        } else {
+            s.append(marsOrientation);
+        }
+
+        if (isLost)
+            s.append(" LOST");
+
+        return s.toString();
+    }
+
+    // determine which direction robot is facing. note:- 360 degree turn equals one rotation
+    private MarsOrientation getMarsOrientation() {
+        double theta = super.getTheta();
+
+        if (theta < 0)
+            theta = 360 + theta;
+
+        theta = theta % 360;
+
+        return MarsOrientation.valueOf(theta);
+    }
+
+    public boolean isLost() {
+        return this.isLost;
+    }
+
 }
