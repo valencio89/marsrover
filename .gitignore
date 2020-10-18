@@ -1,0 +1,15 @@
+target/
+
+.idea
+*.iml
+
+.settings
+.project
+.classpath
+
+.metals
+.bloop
+
+*.log
+
+.DS_Store
